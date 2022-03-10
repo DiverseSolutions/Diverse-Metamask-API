@@ -15,8 +15,7 @@ export default function Home() {
     if (window.ethereum) {
       setHaveMetamask(true)
       if( validateParameters() == false ) return;
-      if( validateTokenAddress() == false ) return;
-      addTokenToMetamask()
+      validateTokenAddress()
     }
 
   }, [router.query])
@@ -24,7 +23,6 @@ export default function Home() {
 
 
   async function addTokenToMetamask() {
-    setMetamaskAddTokenErrorMsg("")
     try {
       await ethereum.request({
         method: 'wallet_watchAsset',
@@ -38,6 +36,7 @@ export default function Home() {
           },
         },
       })
+      setMetamaskAddTokenErrorMsg("")
     }catch(e){
       setMetamaskAddTokenErrorMsg(e.message)
     }
@@ -52,12 +51,11 @@ export default function Home() {
       const tokenContract = new ethers.Contract(address, contractAbi, provider);
       let totalSupply = await tokenContract.totalSupply();
       console.log(totalSupply)
+
+      addTokenToMetamask()
     }catch(e){
       setMetamaskAddTokenErrorMsg("Contract isn't ERC20 Token Or Chain Wrong :(")
-      return false;
     }
-
-    return true;
   }
 
   function validateParameters() {
