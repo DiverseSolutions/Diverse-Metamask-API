@@ -1,12 +1,12 @@
 import {useRouter} from 'next/router'
 import {useEffect, useState} from 'react'
 import styles from '../styles/Home.module.css'
+import { ethers } from "ethers";
 
 export default function Home() {
   const router = useRouter()
   const {name, symbol, decimals, imgUrl, address} = router.query
   const [haveMetamask, setHaveMetamask] = useState(false)
-  const [haveAllParameters, setHaveAllParameters] = useState(false)
 
   const [metamaskAddTokenErrorMsg, setMetamaskAddTokenErrorMsg] = useState("")
 
@@ -14,7 +14,9 @@ export default function Home() {
 
     if (window.ethereum) {
       setHaveMetamask(true)
-      validateParameters()
+      if( validateParameters() == false ) return;
+      if( validateTokenAddress() == false ) return;
+      addTokenToMetamask()
     }
 
   }, [router.query])
@@ -22,6 +24,7 @@ export default function Home() {
 
 
   async function addTokenToMetamask() {
+    setMetamaskAddTokenErrorMsg("")
     try {
       await ethereum.request({
         method: 'wallet_watchAsset',
@@ -40,14 +43,29 @@ export default function Home() {
     }
   }
 
-  function validateParameters() {
-    if (name == undefined || symbol == undefined || decimals == undefined || imgUrl == undefined || address == undefined) {
-      return
+  async function validateTokenAddress(){
+    try {
+      const contractAbi = ["function totalSupply() view returns (uint256)"];
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await provider.send("eth_requestAccounts", []);
+
+      const tokenContract = new ethers.Contract(address, contractAbi, provider);
+      let totalSupply = await tokenContract.totalSupply();
+      console.log(totalSupply)
+    }catch(e){
+      setMetamaskAddTokenErrorMsg("Contract isn't ERC20 Token Or Chain Wrong :(")
+      return false;
     }
 
-    setHaveAllParameters(true)
+    return true;
+  }
 
-    addTokenToMetamask()
+  function validateParameters() {
+    if (name == undefined || symbol == undefined || decimals == undefined || imgUrl == undefined || address == undefined) {
+      setMetamaskAddTokenErrorMsg("Some Query Parameters Are Missing :(")
+      return false;
+    }
+    return true;
   }
 
   function renderView(){
@@ -55,11 +73,7 @@ export default function Home() {
       return (  <h1 className={styles.title}>No Metamask Detected :( </h1> )
     }
 
-    if(haveAllParameters == false){
-      return (  <h1 className={styles.title}>Some Query Parameters Are Missing :(</h1> )
-    }
-
-    if(metamaskAddTokenErrorMsg != ""){
+    if(metamaskAddTokenErrorMsg !== ""){
       return (  <h1 className={styles.errorMsg}>{metamaskAddTokenErrorMsg}</h1> )
     }
 
