@@ -1,7 +1,6 @@
 import {useRouter} from 'next/router'
 import {useEffect, useState} from 'react'
-import styles from '../styles/Home.module.css'
-import { ethers } from "ethers";
+import {ethers} from "ethers";
 
 export default function Home() {
   const router = useRouter()
@@ -14,7 +13,7 @@ export default function Home() {
 
     if (window.ethereum) {
       setHaveMetamask(true)
-      if( validateParameters() == false ) return;
+      if (validateParameters() == false) return;
       validateTokenAddress()
     }
 
@@ -37,12 +36,12 @@ export default function Home() {
         },
       })
       setMetamaskAddTokenErrorMsg("")
-    }catch(e){
+    } catch (e) {
       setMetamaskAddTokenErrorMsg(e.message)
     }
   }
 
-  async function validateTokenAddress(){
+  async function validateTokenAddress() {
     try {
       const contractAbi = ["function totalSupply() view returns (uint256)"];
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -53,7 +52,7 @@ export default function Home() {
       console.log(totalSupply)
 
       addTokenToMetamask()
-    }catch(e){
+    } catch (e) {
       setMetamaskAddTokenErrorMsg("Contract isn't ERC20 Token Or Chain Wrong :(")
     }
   }
@@ -66,25 +65,25 @@ export default function Home() {
     return true;
   }
 
-  function renderView(){
-    if(haveMetamask == false){
-      return (  <h1 className={styles.title}>No Metamask Detected :( </h1> )
+  function renderView() {
+    if (haveMetamask == false) {
+      return (<h1 className="mb-12 text-2xl font-semibold text-center sm:text-4xl lg:text-5xl">No Metamask Detected :( </h1>)
     }
 
-    if(metamaskAddTokenErrorMsg !== ""){
-      return (  <h1 className={styles.errorMsg}>{metamaskAddTokenErrorMsg}</h1> )
+    if (metamaskAddTokenErrorMsg !== "") {
+      return (<h1 className="mb-12 text-2xl font-semibold text-center sm:text-4xl lg:text-5xl">{metamaskAddTokenErrorMsg}</h1>)
     }
 
-    return ( <h1 className={styles.title}> Thank you for using Diverse Metamask <a href="https://www.dsolutions.mn/">SDK</a> </h1>)
+    return (<h1 className="mb-12 text-2xl font-semibold text-center sm:text-4xl lg:text-5xl"> Thank you for using <span className="text-blue-600">Diverse Metamask</span> <a href="https://www.dsolutions.mn/">SDK</a> </h1>)
   }
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        { renderView() }
+    <div className="px-0 sm:px-12">
+      <main className="flex flex-col items-center justify-center h-screen">
+        {renderView()}
       </main>
 
-      <footer className={styles.footer}>
+      <footer className="flex items-center justify-center flex-grow py-8 border-t border-gray-300">
         <a
           href="https://www.dsolutions.mn/"
           target="_blank"
