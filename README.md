@@ -6,4 +6,6 @@ implementing metamask functionality in their project with a simple **a html tag*
 
 #### Features
  - ##### Add Token
-   - "/add-token/" endpoint 
+   - "/add-token/" endpoint , add get query parameters to add the token requirements
+ - ##### Get Ethereum Chains 
+   - "/api/add-token/" endpoint 
