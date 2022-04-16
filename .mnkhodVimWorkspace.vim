@@ -10,9 +10,9 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit pages/add-chain.js
+edit pages/switch-chain.js
 argglobal
-balt pages/index.js
+balt pages/add-chain.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -23,16 +23,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 42 - ((18 * winheight(0) + 18) / 37)
+let s:l = 5 - ((4 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 42
-normal! 054|
+keepjumps 5
+normal! 025|
 tabnext 1
 badd +1 pages/_app.js
-badd +36 pages/index.js
-badd +42 pages/add-chain.js
+badd +69 pages/add-chain.js
+badd +5 pages/switch-chain.js
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
