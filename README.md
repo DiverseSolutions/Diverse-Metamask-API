@@ -7,7 +7,9 @@
 This project was created for developers , by allowing developers to
 implementing metamask functionality in their project with a simple **a html tag**.
 
-<br>
+<br/>
+Check out the landing page for examples and query parameter usage
+<br/>
 
 #### Features
  - ##### Add Token

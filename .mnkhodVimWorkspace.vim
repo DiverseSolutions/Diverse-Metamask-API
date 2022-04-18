@@ -10,9 +10,9 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit pages/index.js
+edit README.md
 argglobal
-balt tailwind.config.js
+balt pages/index.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -23,19 +23,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 22 - ((18 * winheight(0) + 19) / 38)
+let s:l = 11 - ((10 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 22
-normal! 094|
+keepjumps 11
+normal! 065|
 tabnext 1
+badd +57 pages/index.js
 badd +12 tailwind.config.js
 badd +8 pages/_document.js
 badd +1 pages/_app.js
 badd +69 pages/add-chain.js
 badd +50 pages/switch-chain.js
-badd +22 pages/index.js
+badd +0 README.md
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -46,7 +47,6 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
