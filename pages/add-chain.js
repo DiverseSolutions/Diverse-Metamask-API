@@ -63,6 +63,15 @@ export default function Home() {
         setErrorMsg(addChainError.message)
       }
     }
+
+    setTimeout(() => {
+      history.back()
+    },4000);
+  }
+
+  function handleGoingBack(e){
+    e.preventDefault()
+    history.back()
   }
 
   function renderView() {
@@ -74,7 +83,14 @@ export default function Home() {
       return (<h1 className="mb-12 text-xl font-semibold text-center sm:text-2xl lg:text-4xl">{errorMsg}</h1>)
     }
 
-    return (<h1 className="mb-12 text-2xl font-semibold text-center sm:text-4xl lg:text-5xl"> Thank you for using <span className="text-blue-600">Diverse Metamask</span> <a href="https://www.dsolutions.mn/">EndPoint</a> </h1>)
+    return (
+      <>
+        <h1 className="text-2xl font-semibold text-center sm:text-4xl lg:text-5xl">
+          Thank you for using <span className="text-blue-600">Diverse Metamask</span> <a href="https://www.dsolutions.mn/">SDK</a>
+        </h1>
+        <button onClick={handleGoingBack} className="px-12 mt-6 text-md btn btn-primary">Go Back</button>
+      </>
+    )
   }
 
   return (

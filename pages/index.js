@@ -45,7 +45,7 @@ export default function Home() {
           </div>
 
           <div className="mockup-phone">
-            <div className="camera"></div> 
+            <div className="camera"></div>
             <div className="display">
               <div className="flex items-center justify-center artboard artboard-demo phone-1">
                 <h1 className="text-2xl font-bold">Switch <span className="text-cyan-400">Chain</span> Endpoint</h1>
