@@ -24,7 +24,6 @@ export default function Home() {
   }, [router.query])
 
 
-  // http://localhost:3000/add-chain?chainId=1&chainName=Ethereum&rpcUrl=https://mainnet.infura.io/v3/&blockExplorerUrl=https://etherscan.io&iconUrl=https://cryptologos.cc/logos/ethereum-eth-logo.png?v=022&currencyName=ETHEREUM&currencySymbol=ETH&currencyDecimals=18
   function validateParameters() {
     if ( chainId == undefined || chainName == undefined || rpcUrl == undefined || blockExplorerUrl == undefined || iconUrl == undefined || currencyName == undefined || currencySymbol == undefined || currencyDecimals == undefined){
       setErrorMsg("Some Query Parameters Are Missing :(")
@@ -76,16 +75,16 @@ export default function Home() {
 
   function renderView() {
     if (haveMetamask == false) {
-      return (<h1 className="mb-12 text-2xl font-semibold text-center sm:text-4xl lg:text-5xl">No Metamask Detected :( </h1>)
+      return (<h1 className="mb-12 text-sm font-semibold text-center sm:text-4xl lg:text-5xl">No Metamask Detected :( </h1>)
     }
 
     if (errorMsg !== "") {
-      return (<h1 className="mb-12 text-xl font-semibold text-center sm:text-2xl lg:text-4xl">{errorMsg}</h1>)
+      return (<h1 className="mb-12 text-sm font-semibold text-center sm:text-2xl lg:text-4xl">{errorMsg}</h1>)
     }
 
     return (
       <>
-        <h1 className="text-2xl font-semibold text-center sm:text-4xl lg:text-5xl">
+        <h1 className="text-sm font-semibold text-center sm:text-4xl lg:text-5xl">
           Thank you for using <span className="text-blue-600">Diverse Metamask</span> <a href="https://www.dsolutions.mn/">SDK</a>
         </h1>
         <button onClick={handleGoingBack} className="px-12 mt-6 text-md btn btn-primary">Go Back</button>
